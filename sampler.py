@@ -32,6 +32,10 @@ More information on itertools can be found at https://docs.python.org/3/library/
 """
 
 
+import itertools
+import numpy as np
+
+
 def cycling_powerset(s):
     """
     Creates an infintly cycling iterator over the powerset of s, starting with the largest combinations
@@ -187,10 +191,6 @@ def subset_sampler(set_list):
                 prev_powerset_elem[i] = nxt
 
         yield result
-
-
-import itertools
-import numpy as np
 
 
 def test_subset_sampler(set_list, test_name=None):
