@@ -160,7 +160,7 @@ def subset_sampler(set_list):
     Note we always want at least 1 element from each set (we omit the empty set in these powersets).
     """
     # Build an iterator over the powerset cardinality for each set in decreasing order
-    powerset_idxs_iter = dec_count(powerset_cards)  # highly memory efficient compared to itertools.product(). O(1) versus O(n^2)
+    powerset_idxs_iter = dec_count(powerset_cards)  # very memory efficient compared to itertools.product()
 
     """
     To conserve memory, we cache the previously generated subset of each set. For example, if we generate subsets based on powerset elements [3, 4, 2], the next
