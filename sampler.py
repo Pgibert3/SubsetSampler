@@ -7,14 +7,14 @@ was to interpret the NetworkML's models, but this was challenging to do with suc
 Using another custom algorithm I built, I was able to group features into bins based off multicollinearity, knowing that the models only required
 a subset of features from each bin to remain accurate.
 
-An example of subset sampling:
+An example of subset sampling from bins of features:
 
 Given feature bins:
 
 BIN_1: [max_frame_len, min_frame_len, 25q_frame_len]
 BIN_2: [ipv4_multicast, upd_port_67_in, upd_port_67_out]
 
-valid subset sample of these bins might be:
+valid subset samples of these bins might be:
 
 [max_frame_len] U [udp_port_67_in, udp_port_67_out] -> [max_frame_len, udp_port_67_in, udp_port_67_out]
 
@@ -22,9 +22,11 @@ or
 
 [min_frame_len, 25q_frame_len] U [ipv4_multicast, upd_port_67_out] -> [min_frame_len, 25q_frame_len, ipv4_multicast, upd_port_67_out]
 
-I built an earlier version of this subset sampler to brute force a sampling of a few features from each bin, and fitting a model to see if it was still accurate.
-I ran into many issues with memory efficency because my first implementaion relied on itertools.product(). On the job I managed to make the sampler more memory
-efficeint so I could test larger bins of features. On my own time, I rebuilt this super memory efficient sampler that completly ommits the use of itertools.product().
+I built an earlier version of this subset sampler to brute force a sampling of a few features from each bin and fit a model to see if it was still accurate.
+I ran into many issues with memory efficency because my first implementaion relied on itertools.product(). itertool.product() claims to be memory efficient, but reading the
+source code reveals that the lower order products are cached to generate the higher order products later. On the job I managed to make the sampler more memory
+efficeint so I could sample from larger bins of features. On my own time, I rebuilt this super memory efficient sampler that completly ommits the use of itertools.product() and 
+greatly reduces the amount of caching needed. More information on itertools can be found at https://docs.python.org/3/library/itertools.html.
 """
 
 
